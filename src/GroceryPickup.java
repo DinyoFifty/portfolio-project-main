@@ -331,6 +331,5 @@ public class GroceryPickup {
 
         out.close();
     }
-    //Version 1.0cddfadsf
 
 }
