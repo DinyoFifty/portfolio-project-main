@@ -28,6 +28,16 @@ the following form: YYYY.0M.0D.
 
 - Might change the subsitute feature since it assumes the subsituted item is found in the same aisle and shelf
 
+## 2026.10.3
+
+### Added
+
+- Designed kernel and enhanced interfaces for GroceryPickup component
+
+### Updated
+
+- Changed design to include a STATUS enum, add, remove, setStatus, getStatus, getLocation, and size for kernel methods
+- Changed design to include subsitute,isOrderComplete,markOutOfStock, and getPickingPath for secondary methods.
 ```
 
 

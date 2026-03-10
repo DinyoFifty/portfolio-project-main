@@ -132,7 +132,7 @@ hierarchy diagram using whatever tools you would like. Then, include a picture
 of it in this folder. You may also embed it just below using markdown syntax
 (i.e., `![ALT TEXT](path/to/file)`).
 
-<!-- TODO: make a diagram of your component hierarchy then delete this comment -->
+![Hierarchy Diagram](diagram.png)
 
 To start making your interfaces, make a branch off of main in your new repo
 called something like `interfaces`. There are many ways to do this, but my
@@ -154,7 +154,6 @@ to see them. If you don't like this workflow, you may try following the
 rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
 
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
