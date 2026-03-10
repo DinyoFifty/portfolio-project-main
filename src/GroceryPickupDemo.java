@@ -17,7 +17,7 @@ import components.simplewriter.SimpleWriter1L;
  *
  * @author Lashond Thambyrajah
  */
-public class GroceryPickup {
+public class GroceryPickupDemo {
 
     // States for each item in the order
     /**
@@ -65,7 +65,7 @@ public class GroceryPickup {
     /**
      * No-argument constructor.
      */
-    public GroceryPickup() {
+    public GroceryPickupDemo() {
         this.createNewRep();
     }
 
@@ -283,7 +283,7 @@ public class GroceryPickup {
     public static void main(String[] args) {
         SimpleWriter out = new SimpleWriter1L();
 
-        GroceryPickup order = new GroceryPickup();
+        GroceryPickupDemo order = new GroceryPickupDemo();
 
         // Add items to the order
         order.add("Whole Milk", "Aisle 2, Shelf A");
