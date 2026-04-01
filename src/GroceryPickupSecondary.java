@@ -4,7 +4,7 @@ import components.sequence.Sequence1L;
 import components.map.Map1L;
 
 /**
- * GroceryPickup secondary methods implemented using kernel methods only.
+ * GroceryPickup abstract class which implements only secondary methods.
  */
 public abstract class GroceryPickupSecondary implements GroceryPickup {
 
@@ -15,8 +15,8 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
     @Override
     public void substitute(String originalItem, String newItem) {
         assert originalItem != null : "Violation of: originalItem is not null";
-        assert this.getStatus(originalItem) != null :
-            "Violation of: originalItem is in this";
+        assert this.getStatus(
+                originalItem) != null : "Violation of: originalItem is in this";
         assert newItem != null : "Violation of: newItem is not null";
 
         String location = this.getLocation(originalItem);
@@ -27,25 +27,24 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
     @Override
     public boolean isOrderComplete() {
         boolean complete = true;
-        /*
-         * Use a temporary order to iterate through items
-         * since we can't directly iterate over this
-         */
         GroceryPickup temp = this.newInstance();
         int size = this.size();
 
+        /* Remove items one by one and check if they're PENDING */
         for (int i = 0; i < size; i++) {
-            // We need hasItem kernel method to check items
-            // so we check via getPickingPath instead
+            Map.Pair<String, Status> entry = this.removeAny();
+            if (entry.value() == Status.PENDING) {
+                complete = false;
+            }
+            temp.add(entry.key(), this.getLocation(entry.key()));
+            temp.setStatus(entry.key(), entry.value());
         }
 
-        /*
-         * Check if any items are still pending by checking
-         * if the picking path has any entries
-         */
-        Map<String, Sequence<String>> path = this.getPickingPath();
-        if (path.size() > 0) {
-            complete = false;
+        /* Restores the items back into the order from temp */
+        for (int i = 0; i < size; i++) {
+            Map.Pair<String, Status> entry = temp.removeAny();
+            this.add(entry.key(), temp.getLocation(entry.key()));
+            this.setStatus(entry.key(), entry.value());
         }
 
         return complete;
@@ -54,8 +53,8 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
     @Override
     public void markOutOfStock(String item) {
         assert item != null : "Violation of: item is not null";
-        assert this.getStatus(item) == Status.PENDING :
-            "Violation of: item status is PENDING";
+        assert this.getStatus(
+                item) == Status.PENDING : "Violation of: item status is PENDING";
 
         this.setStatus(item, Status.OUT_OF_STOCK);
     }
@@ -66,30 +65,42 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
         GroceryPickup temp = this.newInstance();
         int size = this.size();
 
-        /*
-         * Transfer all items to temp, check if pending,
-         * then transfer back
-         */
+        /* Transfer all items to temp while building the picking path */
         for (int i = 0; i < size; i++) {
-            // Without an iterator we can't loop through items
-            // This method needs a kernel iterator or removeAny method
+            Map.Pair<String, Status> entry = this.removeAny();
+            String item = entry.key();
+            Status status = entry.value();
+            String location = this.getLocation(item);
+
+            if (status == Status.PENDING) {
+                if (!path.hasKey(location)) {
+                    path.add(location, new Sequence1L<>());
+                }
+                path.value(location).add(path.value(location).length(), item);
+            }
+
+            temp.add(item, location);
+            temp.setStatus(item, status);
+        }
+
+        /* Restore the items back into this from temp */
+        for (int i = 0; i < size; i++) {
+            Map.Pair<String, Status> entry = temp.removeAny();
+            this.add(entry.key(), temp.getLocation(entry.key()));
+            this.setStatus(entry.key(), entry.value());
         }
 
         return path;
     }
 
     /*
-     * Common methods (Object overrides)
+     * Key Objects methods.
      */
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("GroceryPickup: [");
-        sb.append("size=").append(this.size());
-        sb.append(", complete=").append(this.isOrderComplete());
-        sb.append("]");
-        return sb.toString();
+        return "Order: [size=" + this.size() + ", complete="
+                + this.isOrderComplete() + "]";
     }
 
     @Override
@@ -101,13 +112,7 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
             return false;
         }
         GroceryPickup other = (GroceryPickup) obj;
-        return this.size() == other.size()
-                && this.isOrderComplete() == other.isOrderComplete();
+        return (this.size() == other.size())
+                && (this.isOrderComplete() == other.isOrderComplete());
     }
-
-    @Override
-    public int hashCode() {
-        return this.size();
-    }
-
 }

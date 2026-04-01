@@ -1,6 +1,5 @@
-public
-
 import components.standard.Standard;
+import components.map.Map;
 
 /**
  * GroceryPickupKernel component. Models a grocery pickup order being fulfilled
@@ -86,13 +85,21 @@ public interface GroceryPickupKernel extends Standard<GroceryPickup> {
     String getLocation(String item);
 
     /**
+     * Removes and returns an arbitrary item entry from the order.
+     *
+     * @return a map pair containing the item name and its status
+     * @updates this
+     * @requires |this| > 0
+     * @ensures removeAny is in #this and this = #this \ {removeAny}
+     */
+    Map.Pair<String, Status> removeAny();
+
+    /**
      * Returns the number of items in this order.
      *
      * @return the number of items
      * @ensures size = |this|
      */
     int size();
-
-}{
 
 }
