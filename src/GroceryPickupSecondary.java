@@ -97,13 +97,14 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
      * Key Objects methods.
      */
 
-    /* toString will give the customer order with the size and completion */.
+    /* toString will give the customer order with the size and completion. */
     @Override
     public String toString() {
         return "Order: [size=" + this.size() + ", complete="
                 + this.isOrderComplete() + "]";
     }
-    /* Will check if GroceryPickup orders are the same  */
+
+    /* Will check if GroceryPickup orders are the same */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
