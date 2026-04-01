@@ -6,15 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-
-## 2026.02.06
+## 2026.4.1
 
 ### Added
 
-- Designed a Playable Character<!-- insert name of component 1 here --> component
-- Designed a Dashboard component
-- Designed a Grocery Pickup component
+- Designed abstract class for GroceryPickup component
 
+
+### Updated
+
+- Changed design to include subsitute,isOrderComplete,markOutOfStock, and getPickingPath
+- Updated GroceryPickupKernel to include a removeAny() method for ease of transfering
+- Included toString and equals as key object methods
+
+## 2026.3.10
+
+### Added
+
+- Designed kernel and enhanced interfaces for GroceryPickup component
+
+### Updated
+
+- Changed design to include a STATUS enum, add, remove, setStatus, getStatus, getLocation, and size for kernel methods
+- Changed design to include subsitute,isOrderComplete,markOutOfStock, and getPickingPath for secondary methods.
 
 ## 2026.02.26
 
@@ -28,6 +42,13 @@ the following form: YYYY.0M.0D.
 
 - Might change the subsitute feature since it assumes the subsituted item is found in the same aisle and shelf
 
+## 2026.02.06
+
+### Added
+
+- Designed a Playable Character<!-- insert name of component 1 here --> component
+- Designed a Dashboard component
+- Designed a Grocery Pickup component
 ```
 
 
