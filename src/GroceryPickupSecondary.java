@@ -97,12 +97,13 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
      * Key Objects methods.
      */
 
+    /* toString will give the customer order with the size and completion */.
     @Override
     public String toString() {
         return "Order: [size=" + this.size() + ", complete="
                 + this.isOrderComplete() + "]";
     }
-
+    /* Will check if GroceryPickup orders are the same  */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -115,4 +116,5 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
         return (this.size() == other.size())
                 && (this.isOrderComplete() == other.isOrderComplete());
     }
+    // Didn't include hashCode as this project doesn't need it
 }
