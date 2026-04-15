@@ -1,5 +1,17 @@
 import components.map.Map;
 import components.map.Map1L;
+
+/**
+ * GroceryPickup kernel implementation layered over using Map data structure.
+ *
+ * Convention: {@code rep} maps each item name to a {@code Map.Pair} whose key
+ * is a {@code Status} and whose value is a String (the aisle location). No key
+ * in {@code rep} is null, and no two keys are equal.
+ *
+ * Correspondence: {@code this} = the set of triples {(k, rep.value(k).key(),
+ * rep.value(k).value()) | k in rep}, where each triple is (item name, status,
+ * aisle location).
+ */
 public class GroceryPickup1L extends GroceryPickupSecondary {
 
     /*
@@ -7,7 +19,7 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
      */
 
     /**
-     * Maps each item name to a pair of (Status, aisle location).
+     * Maps each item name to a pair of (Status, Aisle Location).
      */
     private Map<String, Map.Pair<Status, String>> rep;
 
@@ -40,14 +52,13 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     @Override
     public void add(String item, String location) {
         assert item != null : "Violation of: item is not null";
-        assert !this.rep.hasKey(item) : "Violation of: item is not already in this";
+        assert !this.rep
+                .hasKey(item) : "Violation of: item is not already in this";
         assert location != null : "Violation of: location is not null";
 
-        // Store a pair of (PENDING status, location) as the value
-        Map<Status, String> entryMap = new Map1L<>();
-        entryMap.add(Status.PENDING, location);
-        // We use a single-entry Map.Pair by pulling it back out immediately
-        this.rep.add(item, entryMap.removeAny());
+        Map<Status, String> entry = new Map1L<>();
+        entry.add(Status.PENDING, location);
+        this.rep.add(item, entry.removeAny());
     }
 
     @Override
@@ -67,9 +78,9 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
         String location = this.rep.value(item).value();
         this.rep.remove(item);
 
-        Map<Status, String> entryMap = new Map1L<>();
-        entryMap.add(s, location);
-        this.rep.add(item, entryMap.removeAny());
+        Map<Status, String> entry = new Map1L<>();
+        entry.add(s, location);
+        this.rep.add(item, entry.removeAny());
     }
 
     @Override
@@ -92,12 +103,13 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     public Map.Pair<String, Status> removeAny() {
         assert this.rep.size() > 0 : "Violation of: |this| > 0";
 
-        Map.Pair<String, Map.Pair<Status, String>> removed = this.rep.removeAny();
+        Map.Pair<String, Map.Pair<Status, String>> removed = this.rep
+                .removeAny();
 
-        // Build and return a Map.Pair<String, Status> using a temp map
-        Map<String, Status> resultMap = new Map1L<>();
-        resultMap.add(removed.key(), removed.value().key());
-        return resultMap.removeAny();
+        Map<String, Status> result = new Map1L<>();
+        result.add(removed.key(), removed.value().key());
+
+        return result.removeAny();
     }
 
     @Override
@@ -106,7 +118,7 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     }
 
     /*
-     * Standard methods
+     * Standard method abstract contracts converted into Map.
      */
 
     @Override
@@ -123,12 +135,11 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     public void transferFrom(GroceryPickup source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
-        assert source instanceof GroceryPickup1L :
-            "Violation of: source is of dynamic type GroceryPickup1L";
+        assert source instanceof GroceryPickup1L : "Violation of: source is of dynamic type GroceryPickup1L";
 
-        GroceryPickup1L localSource = (GroceryPickup1L) source;
-        this.rep = localSource.rep;
-        localSource.createNewRep();
+        GroceryPickup1L locSource = (GroceryPickup1L) source;
+        this.rep = locSource.rep;
+        locSource.createNewRep();
     }
 
 }
