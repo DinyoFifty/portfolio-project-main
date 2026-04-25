@@ -92,7 +92,16 @@ public interface GroceryPickupKernel extends Standard<GroceryPickup> {
      * @requires |this| > 0
      * @ensures removeAny is in #this and this = #this \ {removeAny}
      */
-    Map.Pair<String, Status> removeAny();
+    Map.Pair<String, Map.Pair<Status, String>> removeAny();
+
+    /**
+     * Reports whether there is an entry for the given item in this order.
+     * @param item
+     *            the name of the item to check for
+     * @return true if the item is in this, false otherwise
+     * @ensures hasItem = (item is in entries of this)
+     */
+    boolean hasItem(String item);
 
     /**
      * Returns the number of items in this order.

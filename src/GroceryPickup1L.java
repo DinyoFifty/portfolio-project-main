@@ -2,52 +2,27 @@ import components.map.Map;
 import components.map.Map1L;
 
 /**
- * GroceryPickup kernel implementation layered over using Map data structure.
- *
- * Convention: {@code rep} maps each item name to a {@code Map.Pair} whose key
- * is a {@code Status} and whose value is a String (the aisle location). No key
- * in {@code rep} is null, and no two keys are equal.
- *
- * Correspondence: {@code this} = the set of triples {(k, rep.value(k).key(),
- * rep.value(k).value()) | k in rep}, where each triple is (item name, status,
- * aisle location).
+ * .
  */
 public class GroceryPickup1L extends GroceryPickupSecondary {
-
-    /*
-     * Private representation
-     */
-
     /**
-     * Maps each item name to a pair of (Status, Aisle Location).
+     * .
      */
     private Map<String, Map.Pair<Status, String>> rep;
 
-    /*
-     * Creator of initial representation
-     */
-
     /**
-     * Initializes {@code rep} to an empty map.
+     * .
      */
     private void createNewRep() {
         this.rep = new Map1L<>();
     }
 
-    /*
-     * Constructors
-     */
-
     /**
-     * No-argument constructor: creates an empty GroceryPickup order.
+     * .
      */
     public GroceryPickup1L() {
         this.createNewRep();
     }
-
-    /*
-     * Kernel methods
-     */
 
     @Override
     public void add(String item, String location) {
@@ -84,10 +59,15 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     }
 
     @Override
+    public boolean hasItem(String item) {
+        assert item != null : "Violation of: item is not null";
+        return this.rep.hasKey(item);
+    }
+
+    @Override
     public Status getStatus(String item) {
         assert item != null : "Violation of: item is not null";
         assert this.rep.hasKey(item) : "Violation of: item is in this";
-
         return this.rep.value(item).key();
     }
 
@@ -95,31 +75,19 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     public String getLocation(String item) {
         assert item != null : "Violation of: item is not null";
         assert this.rep.hasKey(item) : "Violation of: item is in this";
-
         return this.rep.value(item).value();
     }
 
     @Override
-    public Map.Pair<String, Status> removeAny() {
-        assert this.rep.size() > 0 : "Violation of: |this| > 0";
-
-        Map.Pair<String, Map.Pair<Status, String>> removed = this.rep
-                .removeAny();
-
-        Map<String, Status> result = new Map1L<>();
-        result.add(removed.key(), removed.value().key());
-
-        return result.removeAny();
+    public Map.Pair<String, Map.Pair<Status, String>> removeAny() {
+        assert this.size() > 0 : "Violation of: |this| > 0";
+        return this.rep.removeAny();
     }
 
     @Override
     public int size() {
         return this.rep.size();
     }
-
-    /*
-     * Standard method abstract contracts converted into Map.
-     */
 
     @Override
     public GroceryPickup newInstance() {
@@ -135,11 +103,10 @@ public class GroceryPickup1L extends GroceryPickupSecondary {
     public void transferFrom(GroceryPickup source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
-        assert source instanceof GroceryPickup1L : "Violation of: source is of dynamic type GroceryPickup1L";
+        assert source instanceof GroceryPickup1L : "Violation of: dynamic type match";
 
         GroceryPickup1L locSource = (GroceryPickup1L) source;
         this.rep = locSource.rep;
         locSource.createNewRep();
     }
-
 }

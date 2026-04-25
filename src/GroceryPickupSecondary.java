@@ -16,7 +16,7 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
     public void substitute(String originalItem, String newItem) {
         assert originalItem != null : "Violation of: originalItem is not null";
         assert this.getStatus(
-                originalItem) != null : "Violation of: originalItem is in this";
+                originalItem) == Status.PENDING : "Violation of: originalItem status is PENDING";
         assert newItem != null : "Violation of: newItem is not null";
 
         String location = this.getLocation(originalItem);
@@ -32,21 +32,17 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
 
         /* Remove items one by one and check if they're PENDING */
         for (int i = 0; i < size; i++) {
-            Map.Pair<String, Status> entry = this.removeAny();
-            if (entry.value() == Status.PENDING) {
+            Map.Pair<String, Map.Pair<Status, String>> entry = this.removeAny();
+            String item = entry.key();
+            Status status = entry.value().key();
+            String location = entry.value().value();
+            if (status == Status.PENDING) {
                 complete = false;
             }
-            temp.add(entry.key(), this.getLocation(entry.key()));
-            temp.setStatus(entry.key(), entry.value());
+            temp.add(item, location);
+            temp.setStatus(item, status);
         }
-
-        /* Restores the items back into the order from temp */
-        for (int i = 0; i < size; i++) {
-            Map.Pair<String, Status> entry = temp.removeAny();
-            this.add(entry.key(), temp.getLocation(entry.key()));
-            this.setStatus(entry.key(), entry.value());
-        }
-
+        this.transferFrom(temp);
         return complete;
     }
 
@@ -67,10 +63,10 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
 
         /* Transfer all items to temp while building the picking path */
         for (int i = 0; i < size; i++) {
-            Map.Pair<String, Status> entry = this.removeAny();
+            Map.Pair<String, Map.Pair<Status, String>> entry = this.removeAny();
             String item = entry.key();
-            Status status = entry.value();
-            String location = this.getLocation(item);
+            Status status = entry.value().key();
+            String location = entry.value().value();
 
             if (status == Status.PENDING) {
                 if (!path.hasKey(location)) {
@@ -82,14 +78,7 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
             temp.add(item, location);
             temp.setStatus(item, status);
         }
-
-        /* Restore the items back into this from temp */
-        for (int i = 0; i < size; i++) {
-            Map.Pair<String, Status> entry = temp.removeAny();
-            this.add(entry.key(), temp.getLocation(entry.key()));
-            this.setStatus(entry.key(), entry.value());
-        }
-
+        this.transferFrom(temp);
         return path;
     }
 
@@ -100,8 +89,29 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
     /* toString will give the customer order with the size and completion. */
     @Override
     public String toString() {
-        return "Order: [size=" + this.size() + ", complete="
-                + this.isOrderComplete() + "]";
+        String result = "Order: {";
+        GroceryPickup temp = this.newInstance();
+        int size = this.size();
+
+        for (int i = 0; i < size; i++) {
+            var entry = this.removeAny();
+            String item = entry.key();
+            Status status = entry.value().key();
+            String loc = entry.value().value();
+
+            result += item + "=(" + status + ", " + loc + ")";
+
+            temp.add(item, loc);
+            temp.setStatus(item, status);
+
+            if (this.size() > 0) {
+                result += ", ";
+            }
+        }
+
+        this.transferFrom(temp);
+        result += "}";
+        return result;
     }
 
     /* Will check if GroceryPickup orders are the same */
@@ -114,8 +124,31 @@ public abstract class GroceryPickupSecondary implements GroceryPickup {
             return false;
         }
         GroceryPickup other = (GroceryPickup) obj;
-        return (this.size() == other.size())
-                && (this.isOrderComplete() == other.isOrderComplete());
+        if (this.size() != other.size()) {
+            return false;
+        }
+
+        boolean isEqual = true;
+        GroceryPickup temp = this.newInstance();
+
+        while (this.size() > 0) {
+            var entry = this.removeAny();
+            String item = entry.key();
+            Status status = entry.value().key();
+            String loc = entry.value().value();
+
+            if (!other.hasItem(item) || other.getStatus(item) != status
+                    || !other.getLocation(item).equals(loc)) {
+                isEqual = false;
+            }
+
+            temp.add(item, loc);
+            temp.setStatus(item, status);
+        }
+
+        this.transferFrom(temp);
+
+        return isEqual;
     }
     // Didn't include hashCode as this project doesn't need it
 }
