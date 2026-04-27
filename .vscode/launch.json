@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "GroceryPickupManager",
+      "request": "launch",
+      "mainClass": "GroceryPickupManager",
+      "projectName": "portfolio-project-main_ef8c29a7"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
