@@ -1,20 +1,13 @@
 /**
- * A simple demonstration of GroceryPickup being used as a manager-facing order
- * dashboard. The manager oversees multiple customer orders at once, checks
- * which ones are complete, identifies bottlenecks, and reassigns or resolves
- * outstanding items across all active orders.
- *
- * <p>
- * Use case: A store manager monitors a batch of orders during a busy pickup
- * window. They need a quick summary of how many orders are complete, which
- * orders still have pending items, and how many items across all orders are out
- * of stock. This information helps them decide where to direct employees.
- * </p>
+ * A demonstration of GroceryPickup being used as a manager.The manager oversees
+ * multiple customer orders at once, checks which ones are complete, identifies
+ * bottlenecks, and reassigns or resolves outstanding items across all active
+ * orders.
  */
 public final class GroceryPickupManager {
 
     /**
-     * Private constructor to prevent instantiation of utility class.
+     * Private constructor.
      */
     private GroceryPickupManager() {
     }
@@ -23,7 +16,6 @@ public final class GroceryPickupManager {
      * Simulates a manager reviewing and resolving a batch of active orders.
      *
      * @param args
-     *            command-line arguments (not used)
      */
     public static void main(String[] args) {
 
@@ -115,6 +107,7 @@ public final class GroceryPickupManager {
         // Final check - all orders should now be complete
         System.out.println("========================================");
         System.out.println("FINAL STATUS CHECK");
+
         boolean allDone = true;
         for (int i = 0; i < orders.length; i++) {
             boolean done = orders[i].isOrderComplete();

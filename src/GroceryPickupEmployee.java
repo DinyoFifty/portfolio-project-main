@@ -2,21 +2,14 @@ import components.map.Map;
 import components.sequence.Sequence;
 
 /**
- * A simple demonstration of GroceryPickup being used as an employee-facing
- * order picking assistant. The employee walks through the store aisle by aisle,
- * marking items as picked, substituted, or out of stock along the way.
- *
- * <p>
- * Use case: A grocery store employee receives a customer order and uses the
- * picking path to fulfill it efficiently. Items are grouped by aisle so the
- * employee does not backtrack. As the employee picks, they update statuses and
- * handle exceptions like substitutions or missing stock.
- * </p>
+ * A demonstration of GroceryPickup being used by an employee.The employee walks
+ * through the store aisle by aisle, marking items as picked, substituted, or
+ * out of stock along the way.
  */
 public final class GroceryPickupEmployee {
 
     /**
-     * Private constructor to prevent instantiation of utility class.
+     * Private constructor.
      */
     private GroceryPickupEmployee() {
     }
@@ -25,7 +18,6 @@ public final class GroceryPickupEmployee {
      * Simulates an employee picking a customer grocery order.
      *
      * @param args
-     *            command-line arguments (not used)
      */
     public static void main(String[] args) {
 
@@ -75,14 +67,14 @@ public final class GroceryPickupEmployee {
         order.setStatus("Greek Yogurt", GroceryPickupKernel.Status.PICKED);
         System.out.println("Picked: Greek Yogurt");
 
-        // Aisle B1 - bread
+        // Aisle B1
         order.setStatus("Sourdough Bread", GroceryPickupKernel.Status.PICKED);
         System.out.println("Picked: Sourdough Bread");
 
         order.markOutOfStock("Wheat Bread");
         System.out.println("Wheat Bread marked out of stock");
 
-        // Aisle C3 - meat
+        // Aisle C3
         order.setStatus("Chicken Breast", GroceryPickupKernel.Status.PICKED);
         System.out.println("Picked: Chicken Breast");
 
