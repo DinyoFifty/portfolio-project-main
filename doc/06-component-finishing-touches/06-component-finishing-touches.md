@@ -141,7 +141,7 @@ to see them. If you don't like this workflow, you may try following the
 rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
 
-<!-- TODO: make a new branch from main then delete this comment -->
+
 
 ## Assignment Tasks
 
@@ -307,18 +307,30 @@ Take some time to fill them out honestly.
 > complete the portfolio project, how much better (or worse) do you think you
 > understand software development and why?
 
-<!-- TODO: discuss -->
+Completing this project gave me a much better insight into how software development actually works in practice. You have to think about the interface before the implementation, plan out what the kernel needs to guarantee for the client, and then layer secondary methods on top of that. The structure to me was
+vague in tryna understand it in class, but I developed more of an understanding
+when building it.
+
+
 
 > Also, did the portfolio project surface any gaps in your own knowledge of
 > software development. If so, what are those gaps and how did you address them?
 
-<!-- TODO: discuss -->
+Yes, One of the biggest gaps I noticed was that I did not really understand
+the relationship between abstract classes, interfaces, and kernel implementations
+before this project.  My approach was to look through existing
+OSU component implementations for inspiration and watch some YouTube videos on
+Java design patterns.
 
 > Finally, as a part of completing the portfolio project, to what extent has
 > your perspective of software development changed, if at all? In other words,
 > is software development something you still enjoy? If not, why not?
 
-<!-- TODO: discuss -->
+My perspective has shifted a bit. I went into this project thinking of software
+development as something secondary to my hardware interests, but I came out of it
+with more appreciation for how much thought goes into software. I
+wouldn't say it changed my career direction, but I do enjoy it more than I
+expected to.
 
 > One of the challenges of completing the portfolio project is picking up a lot
 > of skills on your own. Some of these skills are, of course, software skills.
@@ -326,25 +338,43 @@ Take some time to fill them out honestly.
 > this process. Therefore, the first question is what skills did you pick up
 > through this process?
 
-<!-- TODO: discuss -->
+On the technical side, I got much more comfortable with Java interfaces, abstract
+classes, and writing JUnit tests. I also picked up some experience using GitHub
+for version control. Beyond the software skills, I got better at reading documentation and existing codebases to figure out how to solve a problem I had never seen before.
 
 > The follow-up question is: could you rephrase these skills you picked up
 > as bullet points that you could put on a resume? Try it below.
 
-<!-- TODO: discuss -->
+Designed and implemented a multi-layered Java software component using
+interface-driven development and the OSU component framework
+
+Wrote comprehensive JUnit test suites covering normal, boundary, and extreme
+cases for all kernel and secondary methods
+
+Used Git and GitHub for version control, branching, and pull request workflows
+
+Independently researched and applied Java design patterns by reading
+documentation and open-source codebases
+
+Decomposed large, ambiguous engineering tasks into structured, incremental
+development milestones
 
 > Next, how has working on this project affected your career trajectory?
 > In other words, do you now hate the topic you picked? Or, are you even more
 > interested in it? Both outcomes are valuable to your personal development.
 
-<!-- TODO: discuss -->
+I picked a grocery pickup component, since I work at Kroger and the Zebra devices we use gave me inspiration. Working on it did not
+change my career trajectory, but it did reinforce what I know about software and hardware. Writing software is not so different from designing abstractions. That
+connection made me more interested in embedded systems and firmware.
 
 > Finally, consider the skills you've picked up and your current career
 > trajectory. What are some things you could do to continue on your
 > career trajectory? Also, who are some mentors you could contact to help
 > you stay on your path?
 
-<!-- TODO: discuss -->
+To continue on my path toward hardware and embedded systems, I could work on
+personal projects involving microcontrollers like Arduino or Raspberry Pi, where
+the software skills I built here would directly apply.On the mentorship side, professors in the ECE department who specialize in embedded systems or computer architecture would be great contacts.
 
 ### Changelog
 
